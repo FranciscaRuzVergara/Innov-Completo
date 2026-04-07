@@ -1,0 +1,43 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: innova-db
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "3306:3306"
+    networks:
+      - innova-network
+
+  ms-empleados:
+    build: ./Innovatech
+    container_name: ms-empleados
+    ports:
+      - "18080:18080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/db_employees?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+    depends_on:
+      - mysql-db
+    networks:
+      - innova-network
+
+  ms-proyectos:
+    build: ./project-service
+    container_name: ms-proyectos
+    ports:
+      - "9090:9090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/db_project?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - TASK_SERVICE_URL=http://ms-empleados:18080
+    depends_on:
+      - mysql-db
+    networks:
+      - innova-network
+
+networks:
+  innova-network:
+    driver: bridge
