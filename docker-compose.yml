@@ -1,0 +1,119 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: innova-db
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "3307:3306"
+    networks:
+      - innova-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper-1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - innova-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka-1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - innova-network
+
+  ms-empleados:
+    build: ./employee
+    container_name: ms-empleados
+    ports:
+      - "18080:18080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/db_employees?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - innova-network
+
+  ms-tareas:
+    build: ./task # Ajusta el nombre de la carpeta si es diferente
+    container_name: ms-tareas
+    ports:
+      - "18081:18081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/db_tasks?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - innova-network
+
+  ms-asignaciones:
+    build: ./assignment # Ajusta el nombre de la carpeta si es diferente
+    container_name: ms-asignaciones
+    ports:
+      - "18082:18082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/db_assignments?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - innova-network
+
+  ms-proyectos:
+    build: ./project-service
+    container_name: ms-proyectos
+    ports:
+      - "9090:9090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/db_project?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - TASK_SERVICE_URL=http://ms-empleados:18080
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - innova-network
+
+networks:
+  innova-network:
+    driver: bridge
