@@ -59,7 +59,7 @@ services:
       - innova-network
 
   ms-tareas:
-    build: ./task # Ajusta el nombre de la carpeta si es diferente
+    build: ./task
     container_name: ms-tareas
     ports:
       - "18081:18081"
@@ -78,7 +78,7 @@ services:
       - innova-network
 
   ms-asignaciones:
-    build: ./assignment # Ajusta el nombre de la carpeta si es diferente
+    build: ./assignment
     container_name: ms-asignaciones
     ports:
       - "18082:18082"
@@ -110,6 +110,28 @@ services:
       mysql-db:
         condition: service_healthy
       kafka:
+        condition: service_started
+    networks:
+      - innova-network
+
+  ms-gateway:
+    build: ./api-gateway
+    container_name: ms-gateway
+    ports:
+      - "19090:19090"
+    environment:
+      - TASK_SERVICE_URL=http://ms-tareas:18081
+      - PROJECT_SERVICE_URL=http://ms-proyectos:9090
+      - EMPLOYEE_SERVICE_URL=http://ms-empleados:18080
+      - ASSIGNMENT_SERVICE_URL=http://ms-asignaciones:18082
+    depends_on:
+      ms-empleados:
+        condition: service_started
+      ms-tareas:
+        condition: service_started
+      ms-proyectos:
+        condition: service_started
+      ms-asignaciones:
         condition: service_started
     networks:
       - innova-network
