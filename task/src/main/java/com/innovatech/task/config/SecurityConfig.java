@@ -1,4 +1,4 @@
-package com.example.cliente_service.config;
+package com.innovatech.task.config;
 
 import java.nio.charset.StandardCharsets;
 

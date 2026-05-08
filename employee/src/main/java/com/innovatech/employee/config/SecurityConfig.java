@@ -1,4 +1,4 @@
-package com.example.cliente_service.config;
+package com.innovatech.employee.config;
 
 import java.nio.charset.StandardCharsets;
 
@@ -41,3 +41,4 @@ public class SecurityConfig {
     }
 
 }
+

@@ -1,4 +1,4 @@
-package com.example.cliente_service.config;
+package assignment.config;
 
 import java.nio.charset.StandardCharsets;
 

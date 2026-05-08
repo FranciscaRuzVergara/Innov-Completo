@@ -49,7 +49,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/bd_users?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
-      - JWT_SECRET=esta_es_mi_compleja_clave_secreta
+      - JWT_SECRET=esta_es_mi_clave_secreta_super_larga_y_compleja_para_que_funcione
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -84,6 +84,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -103,6 +104,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
+
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -121,6 +124,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -140,6 +144,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - TASK_SERVICE_URL=http://ms-empleados:18080
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
