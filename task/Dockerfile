@@ -1,8 +1,15 @@
-# Usamos una imagen ligera de Java 17
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
+WORKDIR /app
+
+COPY pom.xml .
+COPY src ./src
+
+RUN mvn clean package -DskipTests
+
 FROM eclipse-temurin:17-jdk-jammy
+WORKDIR /app
 
-# Apuntamos a la carpeta target y copiamos el archivo .jar que generó Maven
-COPY target/*.jar app.jar
+# Se copia el .jar desde la etapa "builder"
+COPY --from=builder /app/target/*.jar app.jar
 
-# Le decimos a Docker cómo ejecutar tu microservicio
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

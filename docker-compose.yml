@@ -2,6 +2,7 @@ services:
   mysql-db:
     image: mysql:8.0
     container_name: innova-db
+    platform: linux/amd64
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
@@ -39,6 +40,38 @@ services:
     networks:
       - innova-network
 
+  ms-auth:
+    build: ./auth-service
+    container_name: ms-auth
+    ports:
+      - "9094:9094"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/bd_users?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - JWT_SECRET=esta_es_mi_clave_secreta_super_larga_y_compleja_para_que_funcione
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - innova-network
+
+  ms-cliente:
+    build: ./cliente-service
+    container_name: ms-cliente
+    ports:
+      - "9091:9091"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/bd_cliente?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - innova-network
+
   ms-empleados:
     build: ./employee
     container_name: ms-empleados
@@ -50,6 +83,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -69,6 +103,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
+
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -87,6 +123,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -106,6 +143,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=
       - TASK_SERVICE_URL=http://ms-empleados:18080
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -124,6 +162,9 @@ services:
       - PROJECT_SERVICE_URL=http://ms-proyectos:9090
       - EMPLOYEE_SERVICE_URL=http://ms-empleados:18080
       - ASSIGNMENT_SERVICE_URL=http://ms-asignaciones:18082
+      - CLIENTE_SERVICE_URL=http://ms-cliente:9091
+      - AUTH_SERVICE_URL=http://ms-auth:9094
+
     depends_on:
       ms-empleados:
         condition: service_started
@@ -132,6 +173,10 @@ services:
       ms-proyectos:
         condition: service_started
       ms-asignaciones:
+        condition: service_started
+      ms-cliente:
+        condition: service_started
+      ms-auth:
         condition: service_started
     networks:
       - innova-network

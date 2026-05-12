@@ -4,28 +4,45 @@ server:
 spring:
   application:
     name: api-gateway
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: "esta_es_mi_compleja_clave_secreta"
+
   cloud:
     gateway:
       routes:
         - id: task-service
-          uri: http://host.docker.internal:18081
+          uri: http://ms-tareas:18081
           predicates:
             - Path=/tasks/**
 
         - id: project-service
-          uri: http://host.docker.internal:9090
+          uri: http://ms-proyectos:9090
           predicates:
             - Path=/projects/**
 
         - id: employee-service
-          uri: http://host.docker.internal:18080
+          uri: http://ms-empleados:18080
           predicates:
             - Path=/employees/**
 
         - id: assignment-service
-          uri: http://host.docker.internal:18082
+          uri: http://ms-asignaciones:18082
           predicates:
             - Path=/assignments/**
+
+        - id: cliente-service
+          uri: http://ms-cliente:9091
+          predicates:
+            - Path=/clientes/**
+
+        - id: auth-service
+          uri: http://ms-auth:9094
+          predicates:
+            - Path=/auth/**
 
 logging:
   level:
