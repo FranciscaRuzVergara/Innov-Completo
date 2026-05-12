@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 FROM eclipse-temurin:17-jdk-alpine
+=======
+FROM eclipse-temurin:17-jdk-jammy
+>>>>>>> origin/assignment-kafka
 WORKDIR /app
 COPY target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
