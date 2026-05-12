@@ -11,6 +11,7 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository <Task, Long> {
 
     List<Task> findByDateCreatedBetween(LocalDate start, LocalDate end);
-
+    
+    List<Task> findByProjectId(Long projectId);
     
 }

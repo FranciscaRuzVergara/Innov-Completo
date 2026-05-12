@@ -81,4 +81,10 @@ public class TaskController {
         taskService.deleteTask(id);
         return ResponseEntity.ok("Task deleted successfully.");
     }
+
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<Task>> getTasksByProject(@PathVariable Long projectId){
+        List<Task> tasks = taskService.getTasksByProjectId(projectId);
+        return ResponseEntity.ok(tasks);
+    }
 }

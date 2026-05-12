@@ -17,12 +17,12 @@ spring:
         - id: task-service
           uri: http://ms-tareas:18081
           predicates:
-            - Path=/tasks/**
+            - Path=/tasks/**, /roles/**, /task-roles/**, /task-status/**
 
         - id: project-service
           uri: http://ms-proyectos:9090
           predicates:
-            - Path=/projects/**
+            - Path=/projects/**, /kpis/**, /project-status/**
 
         - id: employee-service
           uri: http://ms-empleados:18080
@@ -43,6 +43,11 @@ spring:
           uri: http://ms-auth:9094
           predicates:
             - Path=/auth/**
+
+        - id: bff-service
+          uri: http://ms-bff:18086
+          predicates:
+            - Path=/bff/**
 
 logging:
   level:

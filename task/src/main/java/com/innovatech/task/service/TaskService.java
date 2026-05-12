@@ -60,4 +60,8 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
     
+    public List<Task> getTasksByProjectId(Long projectId){
+        return taskRepository.findByProjectId(projectId);
+    }
+    
 }

@@ -26,7 +26,10 @@ public class ProjectTasksController {
             }
             return ResponseEntity.ok(projectWithTasks);
         } catch (Exception e) {
+            System.err.println("🔥 ERROR CRÍTICO EN BFF: " + e.getMessage());
+            e.printStackTrace(); 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

@@ -141,12 +141,31 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/db_project?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
-      - TASK_SERVICE_URL=http://ms-empleados:18080
+      - TASK_SERVICE_URL=http://ms-tareas:18081
       - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_SECRET_KEY=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - innova-network
+
+  ms-bff:
+    build: ./bff
+    container_name: ms-bff
+    ports:
+      - "18086:18086"
+    environment:
+      - TASK_SERVICE_URL=http://ms-tareas:18081
+      - PROJECT_SERVICE_URL=http://ms-proyectos:9090
+      - SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS=kafka-1:29092
+    depends_on:
+      ms-tareas:
+        condition: service_started
+      ms-proyectos:
+        condition: service_started
       kafka:
         condition: service_started
     networks:
@@ -163,6 +182,7 @@ services:
       - EMPLOYEE_SERVICE_URL=http://ms-empleados:18080
       - ASSIGNMENT_SERVICE_URL=http://ms-asignaciones:18082
       - CLIENTE_SERVICE_URL=http://ms-cliente:9091
+      - BFF_SERVICE_URL=http://ms-bff:18086
       - AUTH_SERVICE_URL=http://ms-auth:9094
 
     depends_on:
