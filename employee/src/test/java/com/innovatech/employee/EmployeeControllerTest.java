@@ -21,7 +21,7 @@ class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean // <--- Cambiado de @MockBean a @MockitoBean
+    @MockitoBean 
     private EmployeeService employeeService;
 
     @Test
