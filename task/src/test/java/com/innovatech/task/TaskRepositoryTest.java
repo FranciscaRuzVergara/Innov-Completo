@@ -7,14 +7,15 @@ import com.innovatech.task.repository.TaskStatusRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-// AQUÍ ESTÁ LA MAGIA: Forzamos a H2 a levantar y a Hibernate a crear las tablas (create-drop)
+@ActiveProfiles("test") 
 @DataJpaTest(properties = {
     "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1",
     "spring.datasource.driverClassName=org.h2.Driver",
