@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AssignmentService {
 
     @Autowired
-    private AssignmentRepository repository;
+    private AssignmentRepository assignmentRepository;
     
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -24,7 +24,7 @@ public class AssignmentService {
 
     public Assignment createAssignment(Assignment assignment) {
         //guarda en la bd
-        Assignment saved = repository.save(assignment);
+        Assignment saved = assignmentRepository.save(assignment);
         
         //aviso a kafka
         try {
@@ -38,6 +38,14 @@ public class AssignmentService {
     }
 
     public List<Assignment> getAllAssignments() {
-        return repository.findAll();
+        return assignmentRepository.findAll();
     }
+
+    public void deleteById(Long id) {
+    if (assignmentRepository.existsById(id)) {
+        assignmentRepository.deleteById(id);
+    } else {
+        throw new RuntimeException("No se encontró la asignación con ID: " + id);
+    }
+}
 }

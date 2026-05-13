@@ -49,7 +49,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://innova-db:3306/bd_users?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
-      - JWT_SECRET=esta_es_mi_clave_secreta_super_larga_y_compleja_para_que_funcione
+      - JWT_SECRET=esta_es_mi_compleja_clave_secreta
     depends_on:
       mysql-db:
         condition: service_healthy
@@ -198,6 +198,21 @@ services:
         condition: service_started
       ms-auth:
         condition: service_started
+    networks:
+      - innova-network
+
+  innov-front:
+    build: ./innov
+    container_name: innov-front
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./innov:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - ms-gateway
     networks:
       - innova-network
 

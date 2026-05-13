@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import assignment.model.Assignment;
 import assignment.service.AssignmentService;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
@@ -36,5 +35,11 @@ public class AssignmentController {
         }
         
         return new ResponseEntity<>(assignments, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAssignment(@PathVariable Long id) {
+        assignmentService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

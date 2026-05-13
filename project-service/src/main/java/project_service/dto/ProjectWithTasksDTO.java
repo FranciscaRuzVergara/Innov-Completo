@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import project_service.model.KPI;
-import project_service.model.ProjectStatus;
 
 @Data
 @NoArgsConstructor
