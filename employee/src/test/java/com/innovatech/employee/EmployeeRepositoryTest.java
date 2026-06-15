@@ -19,7 +19,7 @@ class EmployeeRepositoryTest {
     @Test
     void findByEmail_ShouldReturnEmployee_WhenEmailExists() {
         // Given
-        Employee emp = new Employee("12345678", "Juan", "Pérez", "juan@test.com", 40, "9");
+        Employee emp = new Employee(1L, "12345678", "Juan", "Pérez", "juan@test.com", 40, "9");
         employeeRepository.save(emp);
 
         // When
@@ -32,7 +32,7 @@ class EmployeeRepositoryTest {
 
     @Test
     void existsByEmail_ShouldReturnTrue_WhenEmailExists() {
-        Employee emp = new Employee("87654321", "Maria", "Soto", "maria@test.com", 40, "k");
+        Employee emp = new Employee(2L, "87654321", "Maria", "Soto", "maria@test.com", 40, "k");
         employeeRepository.save(emp);
 
         boolean exists = employeeRepository.existsByEmail("maria@test.com");

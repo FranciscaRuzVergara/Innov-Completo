@@ -3,9 +3,8 @@ package project_service.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty; // NUEVA IMPORTACIÓN DE CONTROL
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,11 +46,10 @@ public class Project {
     private LocalDate endDate;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "project_status_id",nullable = false, foreignKey = @ForeignKey(name = "fk_project_status"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "project_status_id", nullable = false, foreignKey = @ForeignKey(name = "fk_project_status"))
     private ProjectStatus projectStatus;
 
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<KPI> kpis;
 }

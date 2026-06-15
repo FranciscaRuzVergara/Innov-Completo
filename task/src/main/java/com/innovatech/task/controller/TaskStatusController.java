@@ -11,8 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/task-status")
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Cambiar por la ip correspondiente
-
 public class TaskStatusController {
 
     @Autowired

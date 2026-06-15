@@ -24,15 +24,15 @@ public class AssignmentListener {
         try {
             // 1. Leer el evento que viajó por la red
             JsonNode event = objectMapper.readTree(message);
-            String rut = event.get("employeeRut").asText();
+            Long id = event.get("employeeId").asLong();
             Double hours = event.get("assignedHours").asDouble();
 
             // 2. Actualizar las horas del empleado en db_employees
-            employeeRepository.findById(rut).ifPresent(employee -> {
+            employeeRepository.findById(id).ifPresent(employee -> {
                 int newTotal = employee.getTotalHours() + hours.intValue();
                 employee.setTotalHours(newTotal);
                 employeeRepository.save(employee);
-                System.out.println("✅ Horas actualizadas para el RUT: " + rut);
+                System.out.println("✅ Horas actualizadas para el ID: " + id);
             });
 
         } catch (Exception e) {

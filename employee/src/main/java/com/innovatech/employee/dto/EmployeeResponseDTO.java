@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EmployeeResponseDTO {
 
+    private Long id;
     private String rut;
     private String firstName;
     private String lastName;

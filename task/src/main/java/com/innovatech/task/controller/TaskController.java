@@ -1,8 +1,8 @@
 package com.innovatech.task.controller;
 
-import com.innovatech.task.model.Task; // 2. Actualizar import
-import com.innovatech.task.service.TaskService; // 2. Actualizar import
-import com.innovatech.task.dto.TaskWithProjectDTO; // Importar el DTO para el nuevo endpoint
+import com.innovatech.task.model.Task;
+import com.innovatech.task.service.TaskService;
+import com.innovatech.task.dto.TaskWithProjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -13,8 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks") // Puedes cambiarlo a /api/tasks si quieres estandarizar
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/tasks")
 public class TaskController {
     
     @Autowired
@@ -35,7 +34,6 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-    // 3. NUEVO ENDPOINT: Para usar el método que se conecta al MS de Proyectos
     @GetMapping("/complete/{id}")
     public ResponseEntity<?> getCompleteTaskById(@PathVariable Long id) {
         TaskWithProjectDTO taskComplete = taskService.getTaskComplete(id);

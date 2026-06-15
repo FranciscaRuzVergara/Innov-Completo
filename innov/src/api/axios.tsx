@@ -7,11 +7,19 @@ const api = axios.create({
   }
 });
 
+<<<<<<< HEAD
 // Este interceptor "inyecta" el token antes de que la petición salga
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     // Es vital que el formato sea "Bearer [token]"
+=======
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    // Formato bearer
+>>>>>>> origin/brayan
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

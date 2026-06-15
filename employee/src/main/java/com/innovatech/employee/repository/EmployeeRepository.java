@@ -8,9 +8,11 @@ import java.util.Optional;
 
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Optional<Employee> findByEmail(String email);
+
+    Optional<Employee> findByRut(String rut);
 
     boolean existsByEmail(String email);
 }

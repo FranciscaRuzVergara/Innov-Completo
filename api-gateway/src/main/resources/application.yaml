@@ -49,6 +49,13 @@ spring:
           predicates:
             - Path=/bff/**
 
+        - id: front-service
+          uri: http://innov-front:5173
+          predicates:
+            - Path=/**
+          filters:
+            - RewritePath=/.*, /
+
 logging:
   level:
     org.springframework.cloud.gateway: TRACE

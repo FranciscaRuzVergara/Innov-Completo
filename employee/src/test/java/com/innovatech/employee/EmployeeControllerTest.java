@@ -26,11 +26,11 @@ class EmployeeControllerTest {
 
     @Test
     void getEmployeeByRut_ShouldReturnOk() throws Exception {
-        EmployeeResponseDTO response = new EmployeeResponseDTO("12345678", "Juan", "Pérez", "juan@test.com", 40, "9");
+        EmployeeResponseDTO response = new EmployeeResponseDTO(1L, "12345678", "Juan", "Pérez", "juan@test.com", 40, "9");
         
         when(employeeService.getEmployeeByRut("12345678")).thenReturn(Optional.of(response));
 
-        mockMvc.perform(get("/employees/12345678"))
+        mockMvc.perform(get("/employees/rut/12345678"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Juan"));
     }
