@@ -22,7 +22,14 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getAllEmployees());
     }
 
-    @GetMapping("/{rut}")
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeResponseDTO> getEmployeeById(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/rut/{rut}")
     public ResponseEntity<EmployeeResponseDTO> getEmployeeByRut(@PathVariable String rut) {
         return employeeService.getEmployeeByRut(rut)
                 .map(ResponseEntity::ok)
@@ -48,21 +55,21 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{rut}")
-    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable String rut,
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable Long id,
                                                               @RequestBody EmployeeRequestDTO dto) {
         try {
-            EmployeeResponseDTO updated = employeeService.updateEmployee(rut, dto);
+            EmployeeResponseDTO updated = employeeService.updateEmployee(id, dto);
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/{rut}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable String rut) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         try {
-            employeeService.deleteEmployee(rut);
+            employeeService.deleteEmployee(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

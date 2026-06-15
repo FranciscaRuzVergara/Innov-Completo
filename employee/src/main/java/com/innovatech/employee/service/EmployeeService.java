@@ -21,6 +21,7 @@ public class EmployeeService {
     // Mapper: Employee -> EmployeeResponseDTO
     private EmployeeResponseDTO toResponseDTO(Employee employee) {
         return new EmployeeResponseDTO(
+                employee.getId(),
                 employee.getRut(),
                 employee.getFirstName(),
                 employee.getLastName(),
@@ -34,6 +35,7 @@ public class EmployeeService {
     // Mapper: EmployeeRequestDTO -> Employee
     private Employee toEntity(EmployeeRequestDTO dto) {
         Employee employee = new Employee();
+        employee.setId(dto.getId());
         employee.setRut(dto.getRut());
         employee.setFirstName(dto.getFirstName());
         employee.setLastName(dto.getLastName());
@@ -51,9 +53,9 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    // Get employee by RUT
-    public Optional<EmployeeResponseDTO> getEmployeeByRut(String rut) {
-        return employeeRepository.findById(rut)
+    // Get employee by ID
+    public Optional<EmployeeResponseDTO> getEmployeeById(Long id) {
+        return employeeRepository.findById(id)
                 .map(this::toResponseDTO);
     }
 
@@ -63,6 +65,12 @@ public class EmployeeService {
                 .map(this::toResponseDTO);
     }
 
+
+    // Get employee by RUT
+    public Optional<EmployeeResponseDTO> getEmployeeByRut(String rut) {
+        return employeeRepository.findByRut(rut)
+                .map(this::toResponseDTO);
+    }
    
     // Create employee
     @Transactional
@@ -75,11 +83,9 @@ public class EmployeeService {
 
     // Update employee
     @Transactional
-    public EmployeeResponseDTO updateEmployee(String rut, EmployeeRequestDTO dto) {
-        Employee existing = employeeRepository.findById(rut)
-                .orElseThrow(() -> new RuntimeException("Employee not found with RUT: " + rut));
-
-       
+    public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO dto) {
+        Employee existing = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + id));
 
         existing.setFirstName(dto.getFirstName());
         existing.setLastName(dto.getLastName());
@@ -93,10 +99,10 @@ public class EmployeeService {
 
     // Delete employee
     @Transactional
-    public void deleteEmployee(String rut) {
-        if (!employeeRepository.existsById(rut)) {
-            throw new RuntimeException("Employee not found with RUT: " + rut);
+    public void deleteEmployee(Long id) {
+        if (!employeeRepository.existsById(id)) {
+            throw new RuntimeException("Employee not found with ID: " + id);
         }
-        employeeRepository.deleteById(rut);
+        employeeRepository.deleteById(id);
     }
 }

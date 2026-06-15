@@ -33,8 +33,8 @@ class EmployeeServiceTest {
  
     @BeforeEach
     void setUp() {
-        employee = new Employee("12345678", "Juan", "Pérez", "juan@example.com", 40, "9");
-        requestDTO = new EmployeeRequestDTO("12345678", "Juan", "Pérez", "juan@example.com", 40, "9");
+        employee = new Employee(1L, "12345678", "Juan", "Pérez", "juan@example.com", 40, "9");
+        requestDTO = new EmployeeRequestDTO(1L, "12345678", "Juan", "Pérez", "juan@example.com", 40, "9");
     }
  
     // ✅ Test 1: createEmployee guarda y retorna el DTO correctamente
@@ -66,11 +66,12 @@ class EmployeeServiceTest {
     // ✅ Test 3: deleteEmployee lanza excepción si el RUT no existe
     @Test
     void deleteEmployee_shouldThrowException_whenRutNotFound() {
-        when(employeeRepository.existsById("99999999")).thenReturn(false);
+        // CORREGIDO: Ahora valida por existsById(1L) (Long) y llama al método por ID
+        when(employeeRepository.existsById(1L)).thenReturn(false);
  
-        assertThatThrownBy(() -> employeeService.deleteEmployee("99999999"))
+        assertThatThrownBy(() -> employeeService.deleteEmployee(1L))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Employee not found with RUT: 99999999");
+                .hasMessageContaining("Employee not found with ID: 1");
  
         verify(employeeRepository, never()).deleteById(any());
     }
@@ -78,7 +79,8 @@ class EmployeeServiceTest {
     // ✅ Bonus: getEmployeeByRut retorna vacío si no existe
     @Test
     void getEmployeeByRut_shouldReturnEmpty_whenNotFound() {
-        when(employeeRepository.findById("00000000")).thenReturn(Optional.empty());
+        // CORREGIDO: Al buscar por RUT, el repositorio invoca findByRut(), no findById()
+        when(employeeRepository.findByRut("00000000")).thenReturn(Optional.empty());
  
         Optional<EmployeeResponseDTO> result = employeeService.getEmployeeByRut("00000000");
  

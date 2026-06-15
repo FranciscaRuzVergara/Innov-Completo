@@ -15,6 +15,10 @@ import lombok.AllArgsConstructor;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true, length = 3)
+    private Long id;
+
     @Column(name = "rut", nullable = false, unique = true, length = 20)
     private String rut;
 

@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { validateRut } from '@/utils/validator-rut';
 
 interface EmployeeFormProps {
-  onCreate: (employee: { rut: string; firstName: string; lastName: string; email: string }) => Promise<void>;
+  onCreate: (employee: {rut: string; firstName: string; lastName: string; email: string }) => Promise<void>;
 }
 
 export const EmployeeForm: React.FC<EmployeeFormProps> = ({ onCreate }) => {
@@ -50,7 +50,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({ onCreate }) => {
       email: formData.email
     });
 
-    setFormData({ rut: '', firstName: '', lastName: '', email: '' });
+    setFormData({rut: '', firstName: '', lastName: '', email: '' });
   };
 
   return (
