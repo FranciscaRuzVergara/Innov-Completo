@@ -37,6 +37,14 @@ public class SecurityConfig {
             .authorizeExchange(exchanges -> exchanges
                 // 1. Permite las preguntas de CORS (OPTIONS) sin pedir token
                 .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
+                .pathMatchers(
+                    "/swagger-ui.html", 
+                    "/swagger-ui/**", 
+                    "/v3/api-docs/**", 
+                    "/webjars/**", 
+                    "/*/v3/api-docs",     
+                    "/*/v3/api-docs/**"   
+                ).permitAll()
                 // 2. Permite el login y registro sin pedir token
                 .pathMatchers("/auth/**").permitAll()
                 // 3. Todo lo demás (Assignments, Proyectos, etc.) REQUIERE el token

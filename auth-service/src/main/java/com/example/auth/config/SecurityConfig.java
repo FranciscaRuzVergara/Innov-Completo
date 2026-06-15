@@ -17,6 +17,13 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Deshabilitamos CSRF para APIs
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin estado (JWT)
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/v3/api-docs/**",
+                    "/*/v3/api-docs",
+                    "/*/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+                ).permitAll()
                 .requestMatchers("/auth/login", "/auth/register").permitAll() // Hacemos públicas estas rutas
                 .anyRequest().authenticated() // El resto requiere token
             );

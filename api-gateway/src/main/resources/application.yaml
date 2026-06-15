@@ -62,3 +62,22 @@ logging:
     org.springframework.http.server.reactive: DEBUG
     org.springframework.web.reactive: DEBUG
     reactor.netty: DEBUG
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Task
+        url: /tasks/v3/api-docs
+      - name: Project
+        url: /projects/v3/api-docs
+      - name: Employee
+        url: /employees/v3/api-docs
+      - name: Assignment
+        url: /assignments/v3/api-docs
+      - name: Clientes
+        url: /clientes/v3/api-docs
+      - name: Auth
+        url: /auth/v3/api-docs
+      - name: BFF
+        url: /bff/v3/api-docs
