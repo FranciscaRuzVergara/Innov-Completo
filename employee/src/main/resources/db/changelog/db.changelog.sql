@@ -13,5 +13,5 @@ CREATE TABLE employee (
 
 --changeset brayan:2
 INSERT INTO employee (id, rut, employee_name, employee_surname, employee_mail, total_hours, dv) VALUES
-(1, '1111111-1','Juan', 'Perez', 'juanperez@gmail.com', 400, 'A'),
-(2, '0000000-0', 'Pedro', 'pancho', 'pedrop@gmail.com', 1300, 'A');
+(1, '11111111-1','Juan', 'Perez', 'juanperez@gmail.com', 400, 'A'),
+(2, '00000000-0', 'Pedro', 'pancho', 'pedrop@gmail.com', 1300, 'A');
