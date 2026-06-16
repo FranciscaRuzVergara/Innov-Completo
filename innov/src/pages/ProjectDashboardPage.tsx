@@ -52,6 +52,7 @@ export const ProjectDashboardPage: React.FC = () => {
     );
   }
 
+
   return (
     <div className="min-h-screen p-6 lg:p-12 bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 font-sans">
       

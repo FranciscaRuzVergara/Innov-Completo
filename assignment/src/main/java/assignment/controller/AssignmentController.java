@@ -19,11 +19,13 @@ public class AssignmentController {
     private AssignmentService assignmentService;
 
     @PostMapping
-    public ResponseEntity<Assignment> createAssignment(@RequestBody Assignment assignment) {
-
-        Assignment newAssignment = assignmentService.createAssignment(assignment);
-        
-        return new ResponseEntity<>(newAssignment, HttpStatus.CREATED);
+    public ResponseEntity<?> createAssignment(@RequestBody Assignment assignment) {
+        try {
+            Assignment newAssignment = assignmentService.createAssignment(assignment);
+            return new ResponseEntity<>(newAssignment, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
     
     @GetMapping

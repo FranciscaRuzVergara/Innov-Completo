@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { TaskForm } from '@/components/task/task-form';
 import { TaskCard } from '@/components/task/task-card';
 import { getTasks, createTask, deleteTask, type Task } from '@/services/task-service';
+import { GlobalLoading } from '@/components/global/loading';
 
 export const TasksPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -12,7 +13,7 @@ export const TasksPage = () => {
       const data = await getTasks();
       setTasks(data);
     } catch (error) {
-      console.error("🔥 Error consumiendo ms-tareas:", error);
+      console.error("Error consumiendo ms-tareas:", error);
     } finally {
       setLoading(false);
     }
@@ -27,6 +28,7 @@ export const TasksPage = () => {
       const result = await createTask(taskPayload);
       if (result) fetchTasks();
     } catch (error) {
+      console.error("Error al registrar la tarea en el microservicio:", error);
       alert("Error al registrar la tarea en el microservicio");
     }
   };
@@ -37,9 +39,14 @@ export const TasksPage = () => {
       await deleteTask(id);
       fetchTasks();
     } catch (error) {
+      console.error("Error al remover la tarea:", error);
       alert("Error al remover la tarea");
     }
   };
+
+  if (loading) {
+    return <GlobalLoading message="Cargando Tareas..." />;
+  }
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-4 md:p-8 font-sans text-neutral-800">

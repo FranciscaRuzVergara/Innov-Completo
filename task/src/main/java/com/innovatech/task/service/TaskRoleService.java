@@ -20,6 +20,11 @@ public class TaskRoleService {
     private final TaskRepository taskRepository;
     private final RoleRepository roleRepository;
 
+    @Transactional(readOnly = true)
+    public List<TaskRole> getAll() {
+        return taskRoleRepository.findAll();
+    }
+
     // Obtener los roles que requiere una tarea específica
     @Transactional(readOnly = true)
     public List<TaskRole> getRolesByTaskId(Long taskId) {

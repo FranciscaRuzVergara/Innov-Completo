@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '@/api/axios';
 import { ProjectCard } from '@/components/project/project-card';
 
+
 interface ProjectItem {
   projectId: number;
   name: string;
@@ -25,11 +26,8 @@ export const ProjectsPage: React.FC = () => {
           setProjects(response.data);
         }
       } catch (error) {
-        console.error("⚠️ Error al cargar proyectos, usando datos de demostración:", error);
-        setProjects([
-          { projectId: 1, name: 'Innovatech ERP', description: 'Sistema de microservicios corporativo y orquestación BFF.', startDate: '2026-06-01', endDate: '2026-07-01' },
-          { projectId: 2, name: 'RetailCloud Platform', description: 'Infraestructura en la nube con auto-escalado AWS.', startDate: '2026-05-10', endDate: '2026-06-15' }
-        ]);
+        console.error("Error al cargar proyectos", error);
+        alert("Error al cargar proyectos. Intente nuevamente más tarde.");
       } finally {
         setIsLoading(false);
       }
