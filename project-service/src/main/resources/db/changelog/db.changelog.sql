@@ -36,8 +36,8 @@ INSERT INTO status (status_name) VALUES ('PLANNING'), ('IN_PROGRESS'), ('COMPLET
 
 --changeset innovatech:5
 -- Datos iniciales para proyectos (ID 1 usará el estado PLANNING que es ID 1)
-INSERT INTO project (name, description, start_date, project_status_id) 
-VALUES ('Sistema de Gestión Innova', 'Desarrollo de microservicios core', '2024-01-15', 1);
+INSERT INTO project (name, description, start_date, end_date, project_status_id) 
+VALUES ('Sistema de Gestión Innova', 'Desarrollo de microservicios core', '2024-01-15', '2024-07-15', 1);
 
 --changeset innovatech:6
 -- Datos iniciales para KPIs (Relacionados al proyecto ID 1)

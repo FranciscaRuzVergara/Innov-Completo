@@ -28,13 +28,13 @@ export const RegisterPage: React.FC = () => {
 
       if (loginResponse.data.status === "ok" && loginResponse.data.token) {
         localStorage.setItem('token', loginResponse.data.token);
-        navigate('/login');
+        navigate('/employees');
       } else {
         navigate('/login');
       }
 
     } catch (err) {
-      console.error("🔥 Error en el flujo de registro:", err);
+      console.error("Error en el flujo de registro:", err);
       setError("Ocurrió un error en el servidor de autenticación. Intente más tarde.");
     } finally {
       setIsLoading(false);
@@ -45,7 +45,6 @@ export const RegisterPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 font-sans p-6">
       <div className="w-full max-w-md p-8 bg-white/30 backdrop-blur-md border border-white/70 rounded-3xl shadow-sm shadow-neutral-200/30">
         
-        {/* Cabecera / Marca */}
         <div className="flex flex-col items-center mb-8">
           <span className="p-3 bg-neutral-900 text-white rounded-2xl shadow-sm mb-3">
             <ShieldCheck size={24} />
@@ -58,7 +57,6 @@ export const RegisterPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Formulario extraído */}
         <RegisterForm onRegister={handleRegister} error={error} isLoading={isLoading} />
 
         {/* Enlace de Retorno */}

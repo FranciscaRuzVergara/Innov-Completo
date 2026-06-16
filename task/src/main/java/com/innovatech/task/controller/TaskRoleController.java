@@ -3,6 +3,8 @@ package com.innovatech.task.controller;
 import com.innovatech.task.model.TaskRole;
 import com.innovatech.task.service.TaskRoleService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,15 @@ import java.util.List;
 public class TaskRoleController {
 
     private final TaskRoleService taskRoleService;
+
+    @GetMapping
+    public ResponseEntity<List<TaskRole>> getAllTaskRoles() {
+        List<TaskRole> taskRoles = taskRoleService.getAll();
+        if (taskRoles.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.ok(taskRoles);
+    }
 
     // Obtener todas las combinaciones de roles de una tarea
     @GetMapping("/task/{taskId}")

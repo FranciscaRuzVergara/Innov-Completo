@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { AssignmentForm } from "@/components/assignment/assignment-form";
 import { AssignmentCard } from "@/components/assignment/assignment-card";
+import { GlobalLoading } from "@/components/global/loading";
 
 interface Assignment {
   id?: number;
@@ -20,7 +21,6 @@ const AssignmentsPage = () => {
       if (response.status === 200) setAssignments(response.data);
       else if (response.status === 204) setAssignments([]);
     } catch (error: unknown) {
-      // Validación nativa de TypeScript
       if (error && typeof error === "object" && "response" in error) {
         const anyError = error as { response?: { status?: number } };
         console.error("Error:", anyError.response?.status);
@@ -43,7 +43,14 @@ const AssignmentsPage = () => {
       await api.post("/assignments", payload);
       fetchAssignments();
     } catch (error: unknown) {
-      alert("Error al crear asignación");
+      if (error && typeof error === "object" && "response" in error) {
+        const axiosError = error as { response?: { data?: string } };
+        if (axiosError.response?.data) {
+          alert(axiosError.response.data);
+          return;
+        }
+      }
+      alert("Error inesperado al crear asignación");
     }
   };
 
@@ -56,6 +63,10 @@ const AssignmentsPage = () => {
       alert("Error do eliminar");
     }
   };
+
+  if (loading) {
+    return <GlobalLoading message="Cargando Asignaciones..." />;
+  }
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-4 md:p-8 font-sans text-neutral-800">
