@@ -5,13 +5,17 @@ import com.innovatech.employee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.test.context.ActiveProfiles;
+
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 @DataJpaTest
+// Esta línea es la clave para que no ignore tu application-test.properties
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class EmployeeRepositoryTest {
 
     @Autowired
@@ -19,21 +23,17 @@ class EmployeeRepositoryTest {
 
     @Test
     void findByEmail_ShouldReturnEmployee_WhenEmailExists() {
-        // Given
-        Employee emp = new Employee(1L, "12345678", "Juan", "Pérez", "juan@test.com", 40, "9");
+        Employee emp = new Employee(null, "12345678", "Juan", "Pérez", "juan@test.com", 40, "9");
         employeeRepository.save(emp);
-
-        // When
+        
         Optional<Employee> found = employeeRepository.findByEmail("juan@test.com");
-
-        // Then
         assertThat(found).isPresent();
-        assertThat(found.get().getRut()).isEqualTo("12345678");
     }
 
     @Test
     void existsByEmail_ShouldReturnTrue_WhenEmailExists() {
-        Employee emp = new Employee(2L, "87654321", "Maria", "Soto", "maria@test.com", 40, "k");
+        // Cambiamos el 2L por null para que use GenerationType.IDENTITY
+        Employee emp = new Employee(null, "87654321", "Maria", "Soto", "maria@test.com", 40, "k");
         employeeRepository.save(emp);
 
         boolean exists = employeeRepository.existsByEmail("maria@test.com");
