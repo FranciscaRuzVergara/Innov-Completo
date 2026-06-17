@@ -10,8 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 import assignment.service.AssignmentService;
+import org.springframework.web.client.RestTemplate; 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -30,6 +32,9 @@ class AssignmentServiceTest {
 
     @InjectMocks
     private AssignmentService assignmentService;
+
+    @Mock
+    private RestTemplate restTemplate;
 
     @Test
     void createAssignment_ShouldSaveAndSendKafkaEvent() throws Exception {
