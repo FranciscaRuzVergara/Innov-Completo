@@ -7,6 +7,8 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - "3307:3306"
+    #volumes:
+    #  - mysql-data:/var/lib/mysql
     networks:
       - innova-network
     healthcheck:
@@ -22,6 +24,9 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    #volumes:
+     # - zookeeper-data:/var/lib/zookeeper/data
+      #- zookeeper-log:/var/lib/zookeeper/log
     networks:
       - innova-network
 
@@ -37,6 +42,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    #volumes:
+     # - kafka-data:/var/lib/kafka/data
     networks:
       - innova-network
 
@@ -219,3 +226,9 @@ services:
 networks:
   innova-network:
     driver: bridge
+
+#volumes:
+#  mysql-data:
+#  zookeeper-data:
+#  zookeeper-log:
+#  kafka-data:

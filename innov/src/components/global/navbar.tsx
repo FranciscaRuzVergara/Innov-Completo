@@ -77,6 +77,7 @@ export const Navbar: React.FC = () => {
           >
             <ClipboardList size={14} /> Tareas
           </Link>
+
         </div>
 
 

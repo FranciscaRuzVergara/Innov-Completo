@@ -31,7 +31,6 @@ public class Task {
     @Column(name = "date_finished")
     private LocalDate dateFinished;
 
-    // Esto se queda como Long porque Proyecto será otro microservicio externo
     @Column(name = "project_id")
     private Long projectId;
 
@@ -39,8 +38,7 @@ public class Task {
     @JoinColumn(name = "task_status_id", nullable = false)
     private TaskStatus taskStatus;
 
-    // NUEVO: Una tarea puede tener múltiples combinaciones de roles
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-    @JsonIgnore // Para evitar bucles infinitos en el JSON
+    @JsonIgnore
     private List<TaskRole> taskRoles; 
 }
