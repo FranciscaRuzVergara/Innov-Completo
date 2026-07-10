@@ -7,6 +7,9 @@ import com.innovatech.task.repository.TaskStatusRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -20,7 +23,10 @@ import static org.assertj.core.api.Assertions.assertThat;
     "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
     "spring.jpa.hibernate.ddl-auto=create-drop",
     "spring.jpa.show-sql=true"
+
 })
+
+
 class TaskRepositoryTest {
 
     @Autowired

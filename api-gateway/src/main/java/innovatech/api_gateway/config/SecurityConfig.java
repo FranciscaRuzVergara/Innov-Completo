@@ -62,9 +62,15 @@ public class SecurityConfig {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); 
+        config.addAllowedOrigin("http://localhost:5173");
+
+        config.addAllowedOriginPattern("http://10.155.*");
+        config.addAllowedOrigin("http://127.0.0.1:5173");
+        
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+
+        config.setAllowCredentials(true); //no se si esto es necesario, pero lo puse por si acaso
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

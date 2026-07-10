@@ -7,6 +7,7 @@ import { ProjectDashboardPage } from '@/pages/ProjectDashboardPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { Navbar } from '@/components/global/navbar';
 import { TasksPage } from '@/pages/TaskPage';
+import { CreateProjectPage } from '@/pages/CreateProject';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/projects/:id/dashboard" element={<ProjectDashboardPage />} />
         <Route path="/*" element={<Navigate to="/login" />} />
+        <Route path="/projects/create" element={<CreateProjectPage />} />
       </Routes>
     </BrowserRouter>
   );
