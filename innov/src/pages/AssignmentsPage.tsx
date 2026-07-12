@@ -69,22 +69,24 @@ const AssignmentsPage = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-4 md:p-8 font-sans text-neutral-800">
-      <main className="max-w-6xl mx-auto">
-        <AssignmentForm onCreate={handleCreate} />
+    <div className="absolute inset-0 overflow-y-auto bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-24 md:p-28 font-sans text-neutral-800">
+      <div className="max-w-6xl mx-auto w-full pb-12">
+        <main className="w-full">
+          <AssignmentForm onCreate={handleCreate} />
 
-        {/* Listado */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {!loading &&
-            assignments.map((item) => (
-              <AssignmentCard
-                key={item.id || item.employeeRut}
-                item={item}
-                onDelete={handleDelete}
-              />
-            ))}
-        </div>
-      </main>
+          {/* Listado */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {!loading &&
+              assignments.map((item) => (
+                <AssignmentCard
+                  key={item.id || item.employeeRut}
+                  item={item}
+                  onDelete={handleDelete}
+                />
+              ))}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

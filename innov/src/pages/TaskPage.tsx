@@ -49,25 +49,29 @@ export const TasksPage = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-4 md:p-8 font-sans text-neutral-800">
-      <main className="max-w-6xl mx-auto">
-        <header className="mb-8">
-          <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block mb-1">Módulo Central</span>
-          <h2 className="text-2xl font-extrabold text-neutral-800 tracking-tight">Tareas</h2>
-        </header>
+    <div className="absolute inset-0 overflow-y-auto bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-24 md:p-28 font-sans text-neutral-800">
+      
+      <div className="max-w-6xl mx-auto w-full pb-12">
+        <main className="w-full">
+          <header className="mb-8">
+            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block mb-1">Módulo Central</span>
+            <h2 className="text-2xl font-extrabold text-neutral-800 tracking-tight">Tareas</h2>
+          </header>
 
-        <TaskForm onCreate={handleCreateTask} />
+          <TaskForm onCreate={handleCreateTask} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {!loading && tasks.map((item) => (
-            <TaskCard 
-              key={item.idTask} 
-              item={item} 
-              onDelete={handleDeleteTask} 
-            />
-          ))}
-        </div>
-      </main>
+          {/* Listado de Tareas */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {!loading && tasks.map((item) => (
+              <TaskCard 
+                key={item.idTask} 
+                item={item} 
+                onDelete={handleDeleteTask} 
+              />
+            ))}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
