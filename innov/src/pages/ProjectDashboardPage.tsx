@@ -53,7 +53,7 @@ export const ProjectDashboardPage: React.FC = () => {
   }
 
   return (
-    <div className="absolute inset-0 overflow-y-auto p-6 lg:p-12 bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 font-sans flex flex-col">
+    <div className="absolute inset-0 overflow-y-auto p-6 lg:p-28 bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 font-sans flex flex-col">
       
       <div className="max-w-7xl w-full mx-auto flex flex-col pb-12">
         <div className="mb-8">

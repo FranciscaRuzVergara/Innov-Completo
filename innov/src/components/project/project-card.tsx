@@ -16,7 +16,7 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
   return (
-    <div className="group relative p-8 bg-white/40 backdrop-blur-md border border-white/70 rounded-3xl hover:bg-white/70 hover:border-white transition-all shadow-sm shadow-neutral-200/50 flex flex-col justify-between">
+    <div className="group relative p-8 bg-white/40 backdrop-blur-md rounded-3xl hover:bg-white/70 flex flex-col justify-between">
       <div>
         <div className="flex items-center gap-3 mb-4">
           <span className="p-2 bg-neutral-900/5 text-neutral-700 rounded-xl border border-neutral-900/5 group-hover:bg-blue-500/10 group-hover:text-blue-600 transition-colors">

@@ -65,9 +65,10 @@ const AssignmentsPage = () => {
   }
 
   return (
-    <div className="absolute inset-0 overflow-y-auto bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 p-24 md:p-28 font-sans text-neutral-800">
+    // MODIFICADO: Ajustamos los paddings laterales fluidos (px-4 sm:px-6 md:px-8) y el pt para resguardar la Navbar en cualquier pantalla
+    <div className="absolute inset-0 overflow-y-auto bg-gradient-to-tr from-neutral-100 via-neutral-50 to-blue-50/30 pt-24 md:pt-28 pb-12 px-4 sm:px-6 md:px-8 font-sans text-neutral-800">
       
-      <div className="max-w-6xl mx-auto w-full pb-12">
+      <div className="max-w-6xl mx-auto w-full">
         <main className="w-full">
           <AssignmentForm onCreate={handleCreate} />
 
